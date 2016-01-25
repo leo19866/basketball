@@ -13,5 +13,11 @@ class Court extends Model
             'description'
 
 	];
+
+	public function user()
+	{
+
+		return $this->belongTo('App\User','user_id');
+	}
     
 }

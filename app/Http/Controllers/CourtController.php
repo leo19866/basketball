@@ -11,6 +11,13 @@ use App\Http\Controllers\Controller;
 
 class CourtController extends Controller
 {
+    public function __construct()
+    {
+       $this->middleware('auth', ['only' => 'create']);
+
+    }
+
+
     /**
      * Display a listing of the resource.
      *
@@ -43,9 +50,8 @@ class CourtController extends Controller
     public function store(CreateCourtRequest $request)
     {
 
-        $input = $request->all();
 
-        Court::create($input);
+        \Auth::user()->courts()->create($request->all());
 
         return redirect('courts');       
     }

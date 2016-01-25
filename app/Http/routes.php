@@ -31,3 +31,9 @@ Route::get('/', function () {
 Route::group(['middleware' => ['web']], function () {
     Route::resource('courts','CourtController');
 });
+
+Route::group(['middleware' => 'web'], function () {
+    Route::auth();
+
+    Route::get('/home', 'HomeController@index');
+});
