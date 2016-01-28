@@ -20,4 +20,9 @@ class Court extends Model
 		return $this->belongTo('App\User','user_id');
 	}
     
+    public function discussion()
+    {
+
+    	return $this->hasMany('App\Discussion');
+    }
 }

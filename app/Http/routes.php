@@ -36,4 +36,5 @@ Route::group(['middleware' => 'web'], function () {
     Route::auth();
 
     Route::get('/home', 'HomeController@index');
+    Route::post('/courts/{id}',['as'=>'store_discussion','uses'=>'CourtController@AddDiscussion']);
 });

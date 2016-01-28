@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Court;
+use App\Discussion;
 use App\Http\Requests;
 use App\Http\Requests\CreateCourtRequest;
 use App\Http\Controllers\Controller;
@@ -69,6 +70,17 @@ class CourtController extends Controller
 
         return view('courts.show',compact('court'));
 
+
+    }
+
+    public function AddDiscussion(Request $request, $id)
+    {
+         
+         $court = Court::findOrFail($id);
+
+         $court->discussion()->create($request->all());
+
+         return redirect('courts');
 
     }
 
