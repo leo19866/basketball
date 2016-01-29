@@ -10,7 +10,8 @@ class Court extends Model
 	   protected $fillable = [
       
             'title',      
-            'description'
+            'description',
+            'user_id'
 
 	];
 
@@ -20,9 +21,15 @@ class Court extends Model
 		return $this->belongTo('App\User','user_id');
 	}
     
-    public function discussion()
+    public function discussions()
     {
 
     	return $this->hasMany('App\Discussion');
+    }
+
+    public function ownedBy(User $user)
+    {
+
+    	return $this->user_id == $user->id;
     }
 }

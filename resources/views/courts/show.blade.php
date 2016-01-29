@@ -13,6 +13,22 @@
      <div class="description">{!! nl2br($court->description) !!}</div>
      </div>
     
+     <hr>
+   
+     <div>
+     	@foreach($court->discussions->chunk(4) as $set)
+          <div>
+          	  @foreach($set as $discussion)
+          	    <div class="col-md-12">
+                 {{$discussion->discussion}}
+                </div>
+          	  @endforeach
+          </div> 
+     	  
+     	@endforeach
+
+     </div>
+    
      <div class="col-md-12">
       <form method="POST" action="{{ route('store_discussion',[ $court->id ]) }}" >
        {{ csrf_field() }}

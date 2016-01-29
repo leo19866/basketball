@@ -14,7 +14,9 @@ class CourtController extends Controller
 {
     public function __construct()
     {
-       $this->middleware('auth', ['only' => 'create']);
+       $this->middleware('auth', ['except' => 'show']);
+
+       parent::__construct();
 
     }
 
@@ -78,7 +80,7 @@ class CourtController extends Controller
          
          $court = Court::findOrFail($id);
 
-         $court->discussion()->create($request->all());
+         $court->discussions()->create($request->all());
 
          return redirect('courts');
 
@@ -111,14 +113,32 @@ class CourtController extends Controller
         $input = $request->all();
 
         $court = Court::findOrFail($id);
+        
+        
+        if (!$court->ownedBy($this->user)) {
+          
+          return $this->unauthorized($request);
+
+        }
 
         $court->update($input);
-
-
-
-
         //return redirect('courts');  
+        
     }
+
+    public function unauthorized(CreateCourtRequest $request)
+    {
+        if($request->ajax())
+        {
+             return response(['message' =>'No way'], 403);
+        }
+            
+          //flash('No way. ');  
+
+          return redirect('/');
+
+    }
+
 
     /**
      * Remove the specified resource from storage.
